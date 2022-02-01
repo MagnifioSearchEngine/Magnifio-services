@@ -15,17 +15,17 @@ export default function Chat() {
     
   }
 
-  // const showEmails = () => {
-  //   emails.forEach((email) => {
-  //     let iframe = document.createElement('iframe');
+  const showEmails = () => {
+    emails.forEach((email) => {
+      let iframe = document.createElement('iframe');
 
-  //     frameContainerRef.current.appendChild(iframe);
+      frameContainerRef.current.appendChild(iframe);
 
-  //     iframe.contentWindow.document.open();
-  //     iframe.setAttribute('style', 'height: 80vh; width: 70%; margin: 3%');
-  //     iframe.contentWindow.document.write(email), iframe;
-  //   })
-  // }
+      iframe.contentWindow.document.open();
+      iframe.setAttribute('style', 'height: 80vh; width: 70%; margin: 3%');
+      iframe.contentWindow.document.write(email), iframe;
+    })
+  }
 
   useEffect(() => {
     showEmails()
