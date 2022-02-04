@@ -7,6 +7,7 @@ import uvicorn
 from pydantic import BaseModel
 from fastapi import UploadFile, File
 from upload import save_upload_file_tmp, handler
+from preprocess import create_tfidf_features, calculate_similarity, show_similar_documents, preprocess
 
 # Import standard libraries
 import os
@@ -123,6 +124,32 @@ def retrieve(company: str = Body(...), keyword: str = Body(...)):
         "body": list(data)
     }
 
+@app.post('/common')
+def read(body: Key):
+    
+    df = pd.DataFrame(list(files.find({"company": body.company})))
+    
+
+    if df:
+        data = [preprocess(title, content) for title, content in zip([""]*len(df["text"]), df['text'])]
+        X,v = create_tfidf_features(data,df)
+        for topic in body.topics:
+                user_question = [topic]
+                sim_vecs, cosine_similarities = calculate_similarity(X,v, user_question)
+                output = show_similar_documents(data, cosine_similarities, sim_vecs)
+                newDict={
+                    "company":company,
+                    "keyword":topic,
+                    "search_results":output
+                    }
+                    
+                cache.insert_one(newDict)
+            return{"message:success"}
+
+    return {
+        "Success": True,
+        "data": "db_data"
+    }
 
 # @app.route("/uploadAudio",methods=["GET","POST"])
 # def uploadAudio():
