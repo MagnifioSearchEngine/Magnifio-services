@@ -8,7 +8,7 @@ const Event = require('./models/eventSchema');
 require('dotenv').config()
 
 const app = express()
-const port = process.env.PORT || 8080
+const port = 8080
 
 // middlewares
 app.use(express.json())
@@ -23,7 +23,7 @@ const storage = multer.memoryStorage({
 
 // db-setup
 // const DB = 'mongodb+srv://baluram:baluram12345@cluster0.wt36o.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-const DB = 'mongodb+srv://Pranay:confidential@cluster0.2bumc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+const DB = "mongodb://magnifio_dbaUser:xyz123@52.90.163.49:27017"
 mongoose
 	.connect(DB, {
 		useNewUrlParser: true,
@@ -86,10 +86,3 @@ app.post(
 app.listen(port, () => {
 		console.log(`serving on http://localhost:${port}`)
 })
-
-
-/**
- * 
- *  ssh -i "flask.pem" ec2-user@ec2-54-174-6-76.compute-1.amazonaws.com
- * 
- */

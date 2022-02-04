@@ -36,7 +36,7 @@ export default function Loginpage() {
 
 
   const postEvents = async (events) => {
-    const req = axios.post("http://54.174.6.76:8080/events",
+    const req = axios.post("http://52.90.163.49:2020/events",
           events
         )
         .then(data => {
@@ -146,8 +146,8 @@ export default function Loginpage() {
     }
     
     updateUser(payload)
-
-    await axios.post('http://54.174.147.70:8080/api/v1/user/create', payload)
+    //confusion which api is being used here
+    await axios.post('http://52.90.163.49:2020/api/v1/user/create', payload)
     .then(res => {
       console.log(res)
     })

@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 export default function App() {
 
   // const fetchData = async () => {
-  //   axios.get('http://34.223.255.47/retrieve')
+  //   axios.get('http://52.90.163.49:443/retrieve')
   //       .then(res => {
   //         console.log(res.data);
   //       })

@@ -6,7 +6,7 @@ export default function App() {
   const [events, setEvents] = useState([])
 
   const fetcher = async () => {
-    const data = await axios.get(`http://localhost:4000/events`)
+    const data = await axios.get(`http://52.90.163.49:2020/events`)
     console.log("data", data)
     setEvents(data.data);
   }

@@ -67,6 +67,10 @@ def most_common_words(words, n):
 
 class Payload(BaseModel):
     url: str = ""
+    
+class Key(BaseModel):
+    company: str
+    topics: list
 
 
 @app.get("/")
@@ -142,9 +146,8 @@ def read(body: Key):
                     "keyword":topic,
                     "search_results":output
                     }
-                    
                 cache.insert_one(newDict)
-            return{"message:success"}
+        return {"message":"success"}
 
     return {
         "Success": True,

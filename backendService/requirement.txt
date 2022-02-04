@@ -34,3 +34,4 @@ sklearn
 pymongo[srv]
 certifi
 pre-commit
+python-multipart
