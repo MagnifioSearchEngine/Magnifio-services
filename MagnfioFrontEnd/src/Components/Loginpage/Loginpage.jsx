@@ -10,6 +10,75 @@ import emailContext from '../../context/emails/emailContext';
 import userContext from '../../context/user/userContext';
 import { Base64 } from 'js-base64';
 
+
+const gapi = window.gapi
+const CLIENT_ID = "820832714946-5qladfn84bkjhr6g978qr5sasmrv8cg6.apps.googleusercontent.com"
+const API_KEY = "AIzaSyCbJwXUQP4gLxiplgrkxl1UtzvR1VHc-rA"
+const DISCOVERY_DOCS = [
+  "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
+  'https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest',
+  // 'https://people.googleapis.com/$discovery/rest?version=v1'
+]
+let SCOPES = [
+  'https://www.googleapis.com/auth/calendar.events',
+  'https://www.googleapis.com/auth/gmail.readonly',
+  'https://www.googleapis.com/auth/calendar.readonly',
+  // 'https://www.googleapis.com/auth/contacts.readonly'
+]
+SCOPES = SCOPES.join(' ');
+
+let resource = {
+  "summary": "Appointment",
+  "location": "Somewhere",
+  "start": {
+    "dateTime": "2022-02-16T10:00:00.000-07:00"
+  },
+  "end": {
+    "dateTime": "2022-02-16T10:25:00.000-07:00"
+  }
+};
+
+
+export function createEvent(eventData) {
+  gapi.client
+    .request({
+      path: '/calendar/v3/calendars/primary/events',
+      method: 'POST',
+      body: eventData,
+    })
+    .then(function (resp) {
+      console.log('event created', resp.result);
+    })
+    .catch(err => console.error(err))
+}
+
+export function deleteEvent(id) {
+  var request = gapi.client.calendar.events.delete({
+    calendarId: 'primary',
+    eventId: id,
+  });
+
+  request.execute(function (response) {
+    if (response.error || response == false) {
+      console.error('Error');
+    } else {
+      alert('Event deleted successfully');
+    }
+  });
+}
+
+export function updateEvent(id, data) {
+  var request = gapi.client.calendar.events.update({
+    calendarId: 'primary',
+    eventId: id,
+    resource: data,
+  });
+  request.execute(function (event) {
+    alert('Event updated successfully');
+  });
+}
+
+
 export default function Loginpage() {
 
   let contextEmail = [];
@@ -36,7 +105,7 @@ export default function Loginpage() {
 
 
   const postEvents = async (events) => {
-    const req = axios.post("http://52.90.163.49:2020/events",
+    const req = axios.post("http://3.87.73.247:8080/events",
           events
         )
         .then(data => {
@@ -140,14 +209,14 @@ export default function Loginpage() {
   const createUser = async (req) => {
     console.log(req.su);
     const payload = {
-      email: req.su.ev,
-      full_name: req.su.qf,
-      profile_pic: req.su.SM
+      email: req.Du.tv,
+      full_name: req.Du.tf,
+      profile_pic: req.Du.eN
     }
     
     updateUser(payload)
-    //confusion which api is being used here
-    await axios.post('http://52.90.163.49:2020/api/v1/user/create', payload)
+
+    await axios.post('http://54.174.147.70:8080/api/v1/user/create', payload)
     .then(res => {
       console.log(res)
     })
@@ -156,26 +225,29 @@ export default function Loginpage() {
     })
   }
 
+  // calendar operations
+
 
   // google auth
   const handleGoogleAuth = (e) => {
     e.preventDefault()
     console.log('clicked')
-    const gapi = window.gapi
+  //   const gapi = window.gapi
 
-    const CLIENT_ID = "820832714946-5qladfn84bkjhr6g978qr5sasmrv8cg6.apps.googleusercontent.com"
-    const API_KEY = "AIzaSyCbJwXUQP4gLxiplgrkxl1UtzvR1VHc-rA"
-    const DISCOVERY_DOCS = [
-      "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
-      'https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest',
-      // 'https://people.googleapis.com/$discovery/rest?version=v1'
-    ]
-    let SCOPES = [
-      'https://www.googleapis.com/auth/calendar.events',
-      'https://www.googleapis.com/auth/gmail.readonly',
-      // 'https://www.googleapis.com/auth/contacts.readonly'
-  ]
-    SCOPES = SCOPES.join(' ');
+  //   const CLIENT_ID = "820832714946-5qladfn84bkjhr6g978qr5sasmrv8cg6.apps.googleusercontent.com"
+  //   const API_KEY = "AIzaSyCbJwXUQP4gLxiplgrkxl1UtzvR1VHc-rA"
+  //   const DISCOVERY_DOCS = [
+  //     "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
+  //     'https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest',
+  //     // 'https://people.googleapis.com/$discovery/rest?version=v1'
+  //   ]
+  //   let SCOPES = [
+  //     'https://www.googleapis.com/auth/calendar.events',
+  //     'https://www.googleapis.com/auth/gmail.readonly',
+  //     'https://www.googleapis.com/auth/calendar.readonly',
+  //     // 'https://www.googleapis.com/auth/contacts.readonly'
+  // ]
+  //   SCOPES = SCOPES.join(' ');
     
 
     gapi.load('client:auth2', () => {
@@ -216,7 +288,7 @@ export default function Loginpage() {
               endTime: event.end.dateTime,
             })
           })
-          // console.log(events)
+          console.log('EVENTS', events)
           // listConnectionNames()
           postEvents(events)
         })
@@ -226,8 +298,8 @@ export default function Loginpage() {
       // update(emailList); // update context
       updateEmails(contextEmail); // update context
       createUser(res); // create user for chat
-      if(res && res.vc.access_token)  {
-        redirectPage(res.vc.access_token)
+      if(res && res.wc.access_token)  {
+        redirectPage(res.wc.access_token)
       }
         
       })

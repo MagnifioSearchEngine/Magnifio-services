@@ -6,12 +6,14 @@ const S3_BUCKET = process.env.REACT_APP_S3_BUCKET;
 const REGION = process.env.REACT_APP_REGION;
 const ACCESS_KEY_ID = process.env.REACT_APP_ACCESS_KEY_ID;
 const SECRET_ACCESS_KEY = process.env.REACT_APP_SECRET_ACCESS_KEY;
+const ACL = process.env.REACT_APP_ACL;
 
 const config = {
     bucketName: S3_BUCKET,
     region: REGION,
     accessKeyId: ACCESS_KEY_ID,
     secretAccessKey: SECRET_ACCESS_KEY,
+    ACL: ACL,
 }
 
 const FileUpload = () => {
