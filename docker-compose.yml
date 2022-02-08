@@ -9,17 +9,17 @@ services:
       links:
         - mongo-service
 
-    # frontend-service:
-    #   build: ./MagnfioFrontEnd
-    #   ports:
-    #     - 80:3000
-    #   tty: true
+    frontend-service:
+      build: ./MagnfioFrontEnd
+      ports:
+        - 80:3000
+      tty: true
     
-    # events-service:
-    #   build: ./eventsService
-    #   ports:
-    #     - 2020:8080
-    #   tty: true
+    events-service:
+      build: ./eventsService
+      ports:
+        - 2020:8080
+      tty: true
 
     mongo-service:
       image: mongo:latest
