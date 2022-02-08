@@ -6,3 +6,15 @@ content-type: application/json
     "full_name": "ankit",
     "profile_pic": "ankit.jpg"
 }
+
+###
+
+POST http://3.87.73.247:8080/events HTTP/1.1
+content-type: application/json
+
+{
+    "eventId": "1234",
+    "subject": "check the post request",
+    "startTime": "12:00 am",
+    "endTime": "12:00 pm"
+}

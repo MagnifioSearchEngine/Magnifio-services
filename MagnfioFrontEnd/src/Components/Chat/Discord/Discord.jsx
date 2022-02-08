@@ -1,16 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
+import axios from 'axios';
+import './discordDark.css';
+// import './discord.css';
 
 const Discord = () => {
   const [discordMessages, setDiscordMessages] = useState([]);
+  const [prevMessages, setPrevMessages] = useState([]);
 
   const socket = io("https://magnifio-sockets.herokuapp.com/");
+
+  const fetchPreviousMessages = async () => {
+    await axios.post(`http://54.174.147.70:8080/api/v1/discordMessages`, {
+      body: {
+        skip: 2,
+        limit: 100,
+      },
+    })
+    .then(res => {
+      console.log('discord', res);
+      setPrevMessages(res.data.data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  }
 
   useEffect(() => {
     socket.on("connect", () => {
       console.log("discord socket connected");
     });
     socket.emit("join", { name: "all" });
+
+    // get previous messages
+    fetchPreviousMessages();
 
   }, []);
 
@@ -26,7 +50,28 @@ const Discord = () => {
 
     return (
         <div className="discordContainer">
-            <h1>Discord</h1>
+            {prevMessages.map((message) => (
+              <div className="discordWrapper">
+                <div className="discordMessageContainer" key={message._id}>
+                  <h5 className="name">{message.name}</h5>
+                  <span className="channelName">{message.channel}</span>
+                  <div style={{ color: 'white', padding: '8px'}}>{message.content}</div>
+                  <span className="timeStamp">{message.botTime?.toLocaleString()}</span>
+                </div>
+                {/* <div className="discordMessageContainer" key={message._id}>
+                  <h5 className="name">{message.name}</h5>
+                  <span className="channelName">{message.channel}</span>
+                  <div style={{ color: 'white', padding: '8px'}}>{message.content}</div>
+                  <span className="timeStamp">{message.botTime}</span>
+                </div>
+                <div className="discordMessageContainer" key={message._id}>
+                  <h5 className="name">{message.name}</h5>
+                  <span className="channelName">{message.channel}</span>
+                  <div style={{ color: 'white', padding: '8px'}}>{message.content}</div>
+                  <span className="timeStamp">{message.botTime}</span>
+                </div> */}
+              </div>
+            ))}
         </div>
     );
 }

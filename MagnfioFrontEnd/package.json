@@ -13,6 +13,7 @@
 		"@material-ui/icons": "4.11.2",
 		"@mui/icons-material": "^5.0.0",
 		"@mui/material": "^5.0.0",
+		"@syncfusion/ej2-base": "^19.4.42",
 		"@syncfusion/ej2-react-schedule": "^19.2.60",
 		"@types/react": "17.0.21",
 		"antd": "4.16.13",

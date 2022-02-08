@@ -1,35 +1,49 @@
 // import './tempDashboard.css';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import './tempDashboardDark.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 
 export default function TempDashboard() {
+
+    const [events, setEvents] = useState([])
+
+    const getCalendarEvents = async () => {
+        const { data } = await axios.get(`http://3.87.73.247:8080/events`)
+        setEvents(data);
+        console.log('before', events);
+        events.sort((a, b) => {
+            const first = Date.parse(a.startTime);
+            const second = Date.parse(b.startTime);
+            return first - second;
+        });
+        console.log('sorted', events);
+    }
+
+    useEffect(() => {
+        getCalendarEvents();
+        
+    }, [])
+
+
+
   return (
     <div className="tempdb-container">
         <aside className="tempdb-left">
             <div className="schedule">
                 <h4>Schedule</h4>
                 <div className="lines">
-                    <div className="line">
-                        <div>
-                            <h6>9:00 AM</h6> 
-                            <div className='txt' style={{ marginLeft: '300px' }}>Meeting with Joe</div>
-                        </div>
-                    </div>
-                    <div className="line"></div>
-                    <div className="line">
-                        <div>
-                            <h6>1:00 PM</h6>
-                            <div className='txt' style={{ marginRight: '300px' }}>Assignment with Due</div>
-                        </div>
-                    </div>
-                    <div className="line"></div>
-                    <div className="line">
-                        <div>
-                            <h6>3:00 PM</h6>
-                            <div className='txt' style={{ marginLeft: '250px', marginRight: '200px'}}>Meeting with Dan</div>
-                        </div>
-                    </div>
+                    {events?.map((event, index) => {
+                        // const dateString = new Date(event.startTime).toUTCString();
+                        const dateString = new Date(event.startTime)
+                                                .toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})
+                        return (
+                            <div className="line" key={index}>
+                                <h6>{dateString}</h6>
+                                <div className="txt" style={{ marginLeft: '300px'}}>{event.subject}</div>
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
             <div className="todolist">

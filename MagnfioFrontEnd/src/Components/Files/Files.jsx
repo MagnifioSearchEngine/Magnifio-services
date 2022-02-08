@@ -68,7 +68,7 @@ export default function Files() {
     //     const data = new FormData()
     //     data.append('files', uploadedFile)
     //     console.log(data)
-    //     await axios.post('http://52.90.163.49:443/upload', data)
+    //     await axios.post('http://54.174.6.76:8080/upload', data)
     //         .then(res => {
     //             console.log(res);
     //         })

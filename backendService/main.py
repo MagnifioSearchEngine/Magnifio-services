@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.params import Body
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
+import pandas as pd
 # from scrape import getText
 from pydantic import BaseModel
 from fastapi import UploadFile, File
@@ -29,7 +30,7 @@ os.environ["MKL_NUM_THREADS"] = "8"
 os.environ["NUMEXPR_NUM_THREADS"] = "8"
 os.environ["OMP_NUM_THREADS"] = "8"
 
-client = MongoClient()
+client = MongoClient("mongodb://magnifio_dbaUser:xyz123@52.90.163.49:27017")
 db = client["upload_files"]
 files = db["files"]
 cache = db["cache"]
@@ -130,30 +131,24 @@ def retrieve(company: str = Body(...), keyword: str = Body(...)):
 
 @app.post('/common')
 def read(body: Key):
+    output = files.find({"company": body.company})
+    df = pd.DataFrame(list(output))
+    data = [preprocess(title, content) for title, content in zip([""]*len(df["text"]), df['text'])]
+    X,v = create_tfidf_features(data,df)
     
-    df = pd.DataFrame(list(files.find({"company": body.company})))
-    
-
-    if df:
-        data = [preprocess(title, content) for title, content in zip([""]*len(df["text"]), df['text'])]
-        X,v = create_tfidf_features(data,df)
-        for topic in body.topics:
-                user_question = [topic]
-                sim_vecs, cosine_similarities = calculate_similarity(X,v, user_question)
-                output = show_similar_documents(data, cosine_similarities, sim_vecs)
-                newDict={
-                    "company":company,
-                    "keyword":topic,
-                    "search_results":output
-                    }
-                cache.insert_one(newDict)
-        return {"message":"success"}
-
-    return {
-        "Success": True,
-        "data": "db_data"
-    }
-
+    for topic in body.topics:
+        print(topic[0])
+        user_question = [topic[0]]
+        sim_vecs, cosine_similarities = calculate_similarity(X,v, user_question)
+        output = show_similar_documents(data, cosine_similarities, sim_vecs)
+        newDict={
+            "company":body.company,
+            "keyword":topic[0],
+            "search_results":output
+            }
+        cache.insert_one(newDict)
+    print("cache done")
+    return {"message":"success"}
 # @app.route("/uploadAudio",methods=["GET","POST"])
 # def uploadAudio():
 #     if request.method == "POST":
