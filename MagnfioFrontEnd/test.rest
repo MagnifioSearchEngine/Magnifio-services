@@ -18,3 +18,7 @@ content-type: application/json
     "startTime": "12:00 am",
     "endTime": "12:00 pm"
 }
+
+###
+
+GET http://54.174.147.70:8080/api/v1/jira/10012 HTTP/1.1

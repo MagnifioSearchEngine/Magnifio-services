@@ -164,7 +164,7 @@ export default function Loginpage() {
                   if (item.name === 'Subject') {
                     Obj.subject = item.value;
                   }
-                  if(item.name == 'Date'){
+                  if(item.name === 'Date'){
                     Obj.date = item.value;
                   }
                 })

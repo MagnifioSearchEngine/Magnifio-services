@@ -9,6 +9,7 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 import Email from '../Email/Email';
 import Discord from '../Discord/Discord';
 import NormalChat from '../NormalChat/NormalChat';
+import Jira from '../Jira/Jira';
 import './chatTemplate.css';
 import './chatTemplateDark.css';
 
@@ -82,6 +83,7 @@ export default function ChatTemplate({ selectedCategory }) {
             <ScrollToBottom className="scroll-to-bottom">
               {selectedCategory === 'email' && <Email /> }
               {selectedCategory === 'discord' && <Discord /> }
+              {selectedCategory === 'jira' && <Jira /> }
             </ScrollToBottom>
           </div>
           <footer className="chat-footer">
