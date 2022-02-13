@@ -8,6 +8,7 @@ import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import emailContext from '../../context/emails/emailContext';
 import userContext from '../../context/user/userContext';
+import eventContext from '../../context/events/eventContext';
 import { Base64 } from 'js-base64';
 
 
@@ -83,7 +84,8 @@ export default function Loginpage() {
 
   let contextEmail = [];
   const { updateEmails } = useContext(emailContext);
-  const { updateUser } = useContext(userContext)
+  const { updateUser } = useContext(userContext);
+  const { updateEvents } = useContext(eventContext);
   const [emailList, setEmailList] = useState([]);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -279,8 +281,8 @@ export default function Loginpage() {
           console.log('response', response)
           // console.log(gapi.auth2.getAuthInstance().currentUser)
           // console.log('EVENTS: ', data)
-          let events = []
-          events = data.map(event => {
+          let eventData = []
+          eventData = data.map(event => {
             return ({
               eventId: event.id,
               subject: event.summary,
@@ -288,9 +290,10 @@ export default function Loginpage() {
               endTime: event.end.dateTime,
             })
           })
-          console.log('EVENTS', events)
+          console.log('EVENTS', eventData)
           // listConnectionNames()
-          postEvents(events)
+          postEvents(eventData)
+          updateEvents(eventData)
         })
                 
       getEmails()
@@ -333,6 +336,7 @@ export default function Loginpage() {
         })
         console.log(events)
         postEvents(events)
+        updateEvents(events)
         
       })
       .catch(error => console.log(error));

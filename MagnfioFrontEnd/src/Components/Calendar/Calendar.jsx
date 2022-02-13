@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { 
   ScheduleComponent, 
   Day, 
@@ -18,8 +18,11 @@ import {
 import { extend } from '@syncfusion/ej2-base';
 import { SampleBase } from './sampleBase';
 import * as dataSource from './dataSource.json';
+import eventContext from '../../context/events/eventContext';
 import axios from 'axios';
 import "./Calendar.css";
+import { values } from 'lodash';
+
 
 export default class Calendar extends SampleBase {
 
@@ -27,8 +30,7 @@ export default class Calendar extends SampleBase {
     super(...arguments);
     this.data = extend([], dataSource.scheduleData, null, true);
     this.state = {
-      events: [],
-      res: [],
+
     };
   }
 
@@ -81,52 +83,85 @@ export default class Calendar extends SampleBase {
   //   }
   // }
 
-  fetchCalendarEvents = async () => {
-    const { data } = await axios.get(`http://3.87.73.247:8080/events`)
-    // console.log('data', data)
-    this.setState({
-      events: data,
-      res: data.map(event => {
-        const year1 = parseInt(event.startTime.substring(0, 4));
-        const month1 = parseInt(event.startTime.substring(5, 7));
-        const date1 = parseInt(event.startTime.substring(8, 10));
-        const h1 = parseInt(event.startTime.substring(11, 13));
-        const m1 = parseInt(event.startTime.substring(14, 16));
+  fetchCalendarEvents = async (eventData) => {
+    // const { data } = await axios.get(`http://3.87.73.247:8080/events`)
+    // // console.log('data', data)
+    // this.setState({
+    //   events: data,
+    //   res: data.map(event => {
+    //     const year1 = parseInt(event.startTime.substring(0, 4));
+    //     const month1 = parseInt(event.startTime.substring(5, 7));
+    //     const date1 = parseInt(event.startTime.substring(8, 10));
+    //     const h1 = parseInt(event.startTime.substring(11, 13));
+    //     const m1 = parseInt(event.startTime.substring(14, 16));
 
-        const year2 = parseInt(event.endTime.substring(0, 4));
-        const month2 = parseInt(event.endTime.substring(5, 7));
-        const date2 = parseInt(event.endTime.substring(8, 10));
-        const h2 = parseInt(event.endTime.substring(11, 13));
-        const m2 = parseInt(event.endTime.substring(14, 16));
-        return ({
-          Id: event.eventId,
-          Subject: event.subject,
-          StartTime: new Date(year1, month1 - 1, date1, h1, m1),
-          EndTime: new Date(year2, month2 - 1, date2, h2, m2),
-        })
+    //     const year2 = parseInt(event.endTime.substring(0, 4));
+    //     const month2 = parseInt(event.endTime.substring(5, 7));
+    //     const date2 = parseInt(event.endTime.substring(8, 10));
+    //     const h2 = parseInt(event.endTime.substring(11, 13));
+    //     const m2 = parseInt(event.endTime.substring(14, 16));
+    //     return ({
+    //       Id: event.eventId,
+    //       Subject: event.subject,
+    //       StartTime: new Date(year1, month1 - 1, date1, h1, m1),
+    //       EndTime: new Date(year2, month2 - 1, date2, h2, m2),
+    //     })
+    //   })
+    // })
+
+
+    const finalEventData =  eventData.map(event => {
+      const year1 = parseInt(event.startTime.substring(0, 4));
+      const month1 = parseInt(event.startTime.substring(5, 7));
+      const date1 = parseInt(event.startTime.substring(8, 10));
+      const h1 = parseInt(event.startTime.substring(11, 13));
+      const m1 = parseInt(event.startTime.substring(14, 16));
+
+      const year2 = parseInt(event.endTime.substring(0, 4));
+      const month2 = parseInt(event.endTime.substring(5, 7));
+      const date2 = parseInt(event.endTime.substring(8, 10));
+      const h2 = parseInt(event.endTime.substring(11, 13));
+      const m2 = parseInt(event.endTime.substring(14, 16));
+      return ({
+        Id: event.eventId,
+        Subject: event.subject,
+        StartTime: new Date(year1, month1 - 1, date1, h1, m1),
+        EndTime: new Date(year2, month2 - 1, date2, h2, m2),
       })
     })
 
+    return finalEventData;
 
   }
 
-  componentDidMount() {
-    this.fetchCalendarEvents();
-    // createEvent();
-    // deleteEvent();
-  }
 
   render() {
-    return (
-      <div className='calendar'>
+
+    return <CalendarHelper 
+      onPopupClose={this.onPopupClose.bind(this)} 
+      onActionComplete={this.onActionComplete.bind(this)}
+      scheduleObj={(values) => this.scheduleObj = values}
+      fetchCalendarEvents={this.fetchCalendarEvents.bind(this)}
+    />
+  }
+}
+
+
+const CalendarHelper = (props) => {
+
+  const { onPopupClose, onActionComplete, scheduleObj, fetchCalendarEvents } = props;
+  const { events } = useContext(eventContext);
+  console.log('calendar-events-check', events);
+  return (
+    <div className='calendar'>
         <ScheduleComponent 
           height='550px' 
           selectedDate={Date.now()}
-          ref={(val) => (this.scheduleObj = val)}
-          eventSettings={{ dataSource: this.state.res }} 
+          ref={(val) => scheduleObj(val)}
+          eventSettings={{ dataSource: fetchCalendarEvents(events) }} 
           currentView='Month'
-          popupClose={this.onPopupClose.bind(this)}
-          actionComplete={this.onActionComplete.bind(this)}
+          popupClose={onPopupClose}
+          actionComplete={onActionComplete}
         >
           <Inject 
             services={[
@@ -141,6 +176,5 @@ export default class Calendar extends SampleBase {
           />
         </ScheduleComponent>
       </div>
-    );
-  }
+  );
 }
