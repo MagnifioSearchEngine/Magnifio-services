@@ -76,12 +76,6 @@ export default class Calendar extends SampleBase {
     }
   }
   
-  // onActionDelete(args) {
-  //   if (args.requestType === "eventRemoved") {
-  //     console.log(args.deletedRecords[0]);
-  //     deleteEvent(args.deletedRecords[0].Id);
-  //   }
-  // }
 
   fetchCalendarEvents = async (eventData) => {
     // const { data } = await axios.get(`http://3.87.73.247:8080/events`)
@@ -136,7 +130,6 @@ export default class Calendar extends SampleBase {
 
 
   render() {
-
     return <CalendarHelper 
       onPopupClose={this.onPopupClose.bind(this)} 
       onActionComplete={this.onActionComplete.bind(this)}
