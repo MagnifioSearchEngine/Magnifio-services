@@ -10,7 +10,7 @@ export default function Search() {
   const [searchQuery, setSearchQuery] = useState('')
 
   const handlePostQuery = async () => {
-    await axios.post('http://3.95.7.166:80/answer', {
+    await axios.post('http://52.90.163.49:443/answer', {
       question: searchQuery,
       company: 'magnifio'
     })
