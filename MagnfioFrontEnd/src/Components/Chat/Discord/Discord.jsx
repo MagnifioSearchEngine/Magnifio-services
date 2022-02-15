@@ -50,8 +50,8 @@ const Discord = () => {
 
     return (
         <div className="discordContainer">
-            {prevMessages.map((message) => (
-              <div className="discordWrapper">
+            {prevMessages.map((message, index) => (
+              <div className="discordWrapper" key={index}>
                 <div className="discordMessageContainer" key={message._id}>
                   <h5 className="name">{message.name}</h5>
                   <span className="channelName">{message.channel}</span>

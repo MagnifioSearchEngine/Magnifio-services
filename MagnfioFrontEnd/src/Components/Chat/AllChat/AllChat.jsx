@@ -8,11 +8,13 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import Email from '../Email/Email';
 import Discord from '../Discord/Discord';
+import Jira from '../Jira/Jira';
 // import './allChat.css';
 import './allChatDark.css';
 
 
 export default function AllChat({ selectedCategory }) {
+  
   return (
       <div className="allchat-container">
         <div className="allchat-board">
@@ -39,6 +41,7 @@ export default function AllChat({ selectedCategory }) {
             <ScrollToBottom className="allscroll-to-bottom">
               <Discord />
               <Email />
+              <Jira />
             </ScrollToBottom>
           </div>
         </div>
