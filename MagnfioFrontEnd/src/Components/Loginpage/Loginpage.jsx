@@ -43,7 +43,7 @@ let resource = {
 export function createEvent(eventData) {
   gapi.client
     .request({
-      path: '/calendar/v3/calendars/primary/events',
+      path: '/calendar/v3/calendars/primary/events?conferenceDataVersion=1&&sendNotifications=true',
       method: 'POST',
       body: eventData,
     })
@@ -288,11 +288,12 @@ export default function Loginpage() {
               subject: event.summary,
               startTime: event.start.dateTime,
               endTime: event.end.dateTime,
+              attendees: event.attendees,
             })
           })
           console.log('EVENTS', eventData)
           // listConnectionNames()
-          postEvents(eventData)
+          // postEvents(eventData)
           updateEvents(eventData)
         })
                 

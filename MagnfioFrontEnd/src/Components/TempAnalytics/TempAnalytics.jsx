@@ -23,7 +23,7 @@ export default function TempDashboard() {
                             <span><AccountCircleRoundedIcon className="row-icon" /></span>
                             <span>John Doe</span>
                         </div>
-                        <div className="status">
+                        <div className="status dark">
                             <span>Inactive</span>
                         </div>
                     </div>
@@ -32,7 +32,7 @@ export default function TempDashboard() {
                             <span><AccountCircleRoundedIcon className="row-icon"/></span>
                             <span>John Doe</span>
                         </div>
-                        <div className="status">
+                        <div className="status dark">
                             <span>Active</span>
                         </div>
                     </div>
@@ -41,7 +41,7 @@ export default function TempDashboard() {
                             <span><AccountCircleRoundedIcon className="row-icon"/></span>
                             <span>John Doe</span>
                         </div>
-                        <div className="status">
+                        <div className="status dark">
                             <span>Active</span>
                         </div>
                     </div>
@@ -50,14 +50,14 @@ export default function TempDashboard() {
                             <span><AccountCircleRoundedIcon className="row-icon"/></span>
                             <span>John Doe</span>
                         </div>
-                        <div className="status">
+                        <div className="status dark">
                             <span>Active</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="first-inner">
-                <h1>Type of File Uploaded</h1>
+                <h1 style={{marginTop: '10px'}}>Type of File Uploaded</h1>
                 <FileUploadChart/>
             </div>
         </div>
@@ -67,7 +67,7 @@ export default function TempDashboard() {
                 <BarChart />
             </div>
             <div className="second-inner">
-                <h1>Most Viewed File Type</h1>
+                <h1 style={{marginTop: '10px'}}>Most Viewed File Type</h1>
                 <PieChart/>
             </div>
         </div>
@@ -81,8 +81,8 @@ export default function TempDashboard() {
                     <div className="timer">Saved 75s on today</div>
                 </div>
             </div>
-            <div className="third-inner topic-search">
-                <h1>Frequently Searched Topics</h1>
+            <div className="third-inner">
+                <h1 style={{padding: '10px'}}>Frequently Searched Topics</h1>
                 <TopicSearchChart/>
             </div>
         </div>

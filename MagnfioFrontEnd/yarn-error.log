@@ -1,5 +1,5 @@
 Arguments: 
-  E:\node\node\node.exe E:\node\node\node_modules\yarn\bin\yarn.js install
+  E:\node\node\node.exe E:\node\node\node_modules\yarn\bin\yarn.js
 
 PATH: 
   C:\Program Files\Common Files\Oracle\Java\javapath;F:\Sdk\platform-tools;E:\nvm\nvm;E:\nvm\nvm;E:\nvm;E:\node\node;F:\Flutter\flutter\bin;C:\Windows\System32;C:\Windows\System32\WindowsPowerShell\v1.0;E:\C-Drive\Git\cmd;F:\Sdk\tools;C:\Users\ankit\AppData\Local\Microsoft\WindowsApps;C:\Users\ankit\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\heroku\bin;E:\Downloads\heroku\bin;C:\Program Files\Git\mingw64\bin;E:\C-Drive\Git\mingw64\bin;E:\nvm\nvm;E:\nvm;F:\Flutter\flutter\bin;C:\Windows\System32\WindowsPowerShell\v1.0;F:\Sdk\platform-tools;F:\Sdk\cmdline-tools;
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.npmjs.org/@material-ui/icons/-/icons-4.11.2.tgz: ESOCKETTIMEDOUT
+  Error: https://registry.npmjs.org/date-fns/-/date-fns-2.24.0.tgz: ESOCKETTIMEDOUT
       at ClientRequest.<anonymous> (E:\node\node\node_modules\yarn\lib\cli.js:141510:19)
       at Object.onceWrapper (events.js:519:28)
       at ClientRequest.emit (events.js:400:28)
