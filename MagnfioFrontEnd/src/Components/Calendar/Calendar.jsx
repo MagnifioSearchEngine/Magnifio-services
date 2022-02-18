@@ -37,8 +37,9 @@ export default class Calendar extends SampleBase {
   onPopupClose(args) {
     if (args.type === "Editor" && args.target.classList.contains("e-work-cells")) {
       let data = args.data;
+
       data.Id = this.scheduleObj.getEventMaxID();
-      console.log('calendarData', data);
+      // console.log('calendarData', data);
     }
   }
 
