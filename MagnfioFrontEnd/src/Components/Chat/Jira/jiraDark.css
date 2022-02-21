@@ -1,15 +1,16 @@
-.jiraWrapper {
+ /* .jiraWrapper {
     height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
     padding: 10px;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: flex-start;
 }
 
+
 .jiraMessageContainer {
-    height: 100%;
+    height: auto;
     background: #2f3136;
     border: 2px solid #5865f2;
     border-radius: 20px;
@@ -18,9 +19,34 @@
     flex-direction: row;
     margin: 10px;
 }
-
-.timeStamp, .description {
-    color: #5865f2;
+ .jira-drop-down{
+     
+     float: right;
+ }*/
+ .timeStamp, .description {
+    color: red;
     width: 100%;
     margin: 8px;
-}
+} 
+
+ .jira-drop-down{
+     color: #fff;
+     margin: 10px;
+ }
+ 
+ .jira-drop-down:hover{
+     color:#5865f2;
+ }
+
+ .jirainner-container{
+  width: 100%;
+  display: flex;
+  height: auto;
+  background: #2f3136;
+  border: 2px solid #5865f2;
+  border-radius: 20px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  animation: drop 2s linear infinite;
+ }

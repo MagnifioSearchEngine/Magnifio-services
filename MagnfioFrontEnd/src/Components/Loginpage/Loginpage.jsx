@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import './loginpage.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import MicrosoftLogin from "react-microsoft-login";
 import { useHistory } from 'react-router';
@@ -11,43 +11,45 @@ import userContext from '../../context/user/userContext';
 import eventContext from '../../context/events/eventContext';
 import { Base64 } from 'js-base64';
 
-
 const gapi = window.gapi
 const CLIENT_ID = "820832714946-5qladfn84bkjhr6g978qr5sasmrv8cg6.apps.googleusercontent.com"
 const API_KEY = "AIzaSyCbJwXUQP4gLxiplgrkxl1UtzvR1VHc-rA"
 const DISCOVERY_DOCS = [
   "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
   'https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest',
+  "https://www.googleapis.com/discovery/v1/apis/people/v1/rest",
   // 'https://people.googleapis.com/$discovery/rest?version=v1'
 ]
 let SCOPES = [
   'https://www.googleapis.com/auth/calendar.events',
   'https://www.googleapis.com/auth/gmail.readonly',
   'https://www.googleapis.com/auth/calendar.readonly',
+  "https://www.googleapis.com/auth/contacts.readonly"
   // 'https://www.googleapis.com/auth/contacts.readonly'
 ]
 SCOPES = SCOPES.join(' ');
 
-let resource = {
-  "summary": "Appointment",
-  "location": "Somewhere",
-  "start": {
-    "dateTime": "2022-02-16T10:00:00.000-07:00"
-  },
-  "end": {
-    "dateTime": "2022-02-16T10:25:00.000-07:00"
-  }
-};
+// let resource = {
+//   "summary": "Appointment",
+//   "location": "Somewhere",
+//   "start": {
+//     "dateTime": "2022-02-16T10:00:00.000-07:00"
+//   },
+//   "end": {
+//     "dateTime": "2022-02-16T10:25:00.000-07:00"
+//   }
+// };
 
 
 export function createEvent(eventData) {
   gapi.client
     .request({
-      path: '/calendar/v3/calendars/primary/events',
+      path: '/calendar/v3/calendars/primary/events?conferenceDataVersion=1&&sendNotifications=true',
       method: 'POST',
       body: eventData,
     })
     .then(function (resp) {
+      toast.success("Event created successfully")
       console.log('event created', resp.result);
     })
     .catch(err => console.error(err))
@@ -63,7 +65,8 @@ export function deleteEvent(id) {
     if (response.error || response == false) {
       console.error('Error');
     } else {
-      alert('Event deleted successfully');
+      // alert('Event deleted successfully');
+      toast.success('Event deleted successfully');
     }
   });
 }
@@ -75,7 +78,8 @@ export function updateEvent(id, data) {
     resource: data,
   });
   request.execute(function (event) {
-    alert('Event updated successfully');
+    // alert('Event updated successfully');
+    toast.success('Event updated successfully');
   });
 }
 
@@ -120,6 +124,8 @@ export default function Loginpage() {
 
         console.log(req)
   }
+   
+  
 
 
   // getting emails
@@ -233,7 +239,7 @@ export default function Loginpage() {
   // google auth
   const handleGoogleAuth = (e) => {
     e.preventDefault()
-    console.log('clicked')
+    // console.log('clicked')
   //   const gapi = window.gapi
 
   //   const CLIENT_ID = "820832714946-5qladfn84bkjhr6g978qr5sasmrv8cg6.apps.googleusercontent.com"
@@ -253,13 +259,14 @@ export default function Loginpage() {
     
 
     gapi.load('client:auth2', () => {
-      console.log('loaded client')
+      // console.log('loaded client')
 
       gapi.client.init({
         apiKey: API_KEY,
         clientId: CLIENT_ID,
         discoveryDocs: DISCOVERY_DOCS,
         scope: SCOPES,
+        immediate: false
       })
 
       gapi.client.load('calendar', 'v3', () => console.log('calendar!'))
@@ -284,10 +291,10 @@ export default function Loginpage() {
           let eventData = []
           eventData = data.map(event => {
             return ({
-              eventId: event.id,
-              subject: event.summary,
-              startTime: event.start.dateTime,
-              endTime: event.end.dateTime,
+              Id: event.id,
+              Subject: event.summary,
+              StartTime: new Date(event.start.dateTime),
+              EndTime: new Date(event.end.dateTime)
             })
           })
           console.log('EVENTS', eventData)
@@ -332,6 +339,7 @@ export default function Loginpage() {
             subject: event.subject,
             startTime: event.start.dateTime,
             endTime: event.end.dateTime,
+            
           })
         })
         console.log(events)
@@ -383,11 +391,7 @@ export default function Loginpage() {
       <Helmet>
         <title>Magnif.io | Login</title>
       </Helmet>
-      <ToastContainer
-        position="top-center"
-        autoClose={false}
-        theme="dark"
-      />
+      
       <div className="login-page">
         <aside className="left"></aside>
         <aside className="right">
