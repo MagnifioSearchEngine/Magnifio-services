@@ -50,7 +50,7 @@ const Discord = () => {
 
     return (
         <div className="discordContainer">
-            {prevMessages.map((message, index) => (
+            {prevMessages.reverse().map((message, index) => (
               <div className="discordWrapper" key={index}>
                 <div className="discordMessageContainer" key={message._id}>
                   <h5 className="name">{message.name}</h5>
