@@ -58,7 +58,6 @@ export default function Welcome() {
    function onPopupClose(args) {
     if (args.type === "Editor" && args.target.classList.contains("e-work-cells")) {
       let data = args.data;
-      console.log(data)
       data.Id = this.scheduleObj.getEventMaxID();
       console.log('calendarData', data);
     }

@@ -227,7 +227,6 @@ export default function Loginpage() {
     e.preventDefault()   
 
     gapi.load('client:auth2', () => {
-      // console.log('loaded client')
 
       gapi.client.init({
         apiKey: API_KEY,
