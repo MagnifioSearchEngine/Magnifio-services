@@ -202,14 +202,14 @@ export default function Loginpage() {
 
   const createUser = async (req) => {
     console.log("user data",req);
-    const payload = {
-      email: req.Du.tv,
-      full_name: req.Du.tf,
-      profile_pic: req.Du.eN
-    }
-    
-    updateUser(payload)
-
+    if(req.Du){
+      const payload = {
+        email: req.Du.tv,
+        full_name: req.Du.tf,
+        profile_pic: req.Du.eN
+      }
+      updateUser(payload)
+      
     await axios.post('http://54.174.147.70:8080/api/v1/user/create', payload)
     .then(res => {
       console.log(res)
@@ -217,6 +217,23 @@ export default function Loginpage() {
     .catch(err => {
       console.log(err)
     })
+    }else if(req.Ju){
+      const payload = {
+        email: req.Ju.zv,
+        full_name: req.Ju.tf,
+        profile_pic: req.Ju.zN
+      }
+      updateUser(payload)
+      
+    await axios.post('http://54.174.147.70:8080/api/v1/user/create', payload)
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
+    }
   }
 
   // calendar operations
