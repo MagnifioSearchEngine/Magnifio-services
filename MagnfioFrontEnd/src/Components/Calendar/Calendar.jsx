@@ -70,7 +70,7 @@ export default function Welcome() {
       console.log(args.addedRecords[0]);
       console.log(args.addedRecords[0].Id);
 
-      var attendees = args.addedRecords[0].OwnerId.map((attendee) =>{
+      var attendees = args.addedRecords[0]?.OwnerId?.map((attendee) =>{
         return({ 
           email:attendee
         })

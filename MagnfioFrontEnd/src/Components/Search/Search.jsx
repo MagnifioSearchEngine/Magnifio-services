@@ -7,6 +7,7 @@ import axios from 'axios';
 
 export default function Search() {
   const [click, setClick] = useState(false)
+  const [searchResult, setsearchResult] = useState()
   const [searchQuery, setSearchQuery] = useState('')
 
   const handlePostQuery = async () => {
@@ -14,7 +15,10 @@ export default function Search() {
       question: searchQuery,
       company: 'magnifio'
     })
-      .then(res => console.log(res))
+      .then(res => {
+        console.log(res)
+        setsearchResult(res.data.body)
+      })
       .catch(err => console.log(err))
   }
 
@@ -33,6 +37,8 @@ export default function Search() {
     if(e.key === 'Enter'){
       handlePostQuery()
       setSearchQuery('')
+      setClick(false)
+
     }
   }
 
@@ -50,9 +56,9 @@ export default function Search() {
         />
       </div>
       <div className={ click ? 'search-suggestion' : 'search-suggestion-show'}></div>
-      {/* <div className="show-result">
-        <Result/>
-      </div> */}
+      <div className="show-result">
+        <Result searchResult={searchResult}/>
+      </div>
     </div>
   );
 }

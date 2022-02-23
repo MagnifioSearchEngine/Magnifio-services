@@ -41,17 +41,22 @@ const Discord = () => {
   useEffect(() => {
     socket.on("allMessage", (data) => {
       console.log('allMessageData', data);
+      fetchPreviousMessages();
+
+
     })
     
     socket.on("message", (data) => {
       console.log(data);
+      fetchPreviousMessages();
+
     });
   }, [socket]);
 
     return (
         <div className="discordContainer">
-            {prevMessages.map((message, index) => (
-              <div className="discordWrapper" key={index}>
+            {prevMessages.reverse().map((message, index) => (
+              <div className="discordWrapper" key={message._id}>
                 <div className="discordMessageContainer" key={message._id}>
                   <h5 className="name">{message.name}</h5>
                   <span className="channelName">{message.channel}</span>

@@ -18,18 +18,22 @@
     background: whitesmoke;
   }
   .result-list{
+      width:100%;
       display: flex;
       align-items: stretch;
       justify-content: center;
-      margin-bottom: 2rem;
+      margin: 0 0 2rem 0rem;
+      padding: 10px;
+      border-radius:4px;
+      background-color: #fff;
   }
   
   .result-list > img{
     margin-right: 10px;
-    width: 40px;
+    width: 50px;
     align-items: center;
     display: flex;
-    height: 40px;
+    height: 50px;
     border-radius:50%;
   }
   .result-title{
@@ -38,19 +42,20 @@
     color: black;
   }
   .result-description{
+    width:80%;
     font-size:18px;
     font-weight: 500;
-    display: block;
+    display: flex;
     color: #000;
+    text-overflow: ellipsis ;
     /*color: gainsboro;*/
   }
   .result-post-timing,.post-user-name{
-    color: gray;
+    color: whitesmoke;
     font-size: 11px;
     padding-right: 10px;
   }
   .post-user-name{
     font-weight: 600;
     font-size:13px;
-    color: grey;
   }
