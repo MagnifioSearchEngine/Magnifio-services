@@ -203,9 +203,9 @@ export default function Loginpage() {
   const createUser = async (req) => {
     console.log("user data",req.Ju);
     const payload = {
-      email: req.Ju.tv,
+      email: req.Ju.zv,
       full_name: req.Ju.tf,
-      profile_pic: req.Ju.eN
+      profile_pic: req.Ju.zN
     }
     
     updateUser(payload)
