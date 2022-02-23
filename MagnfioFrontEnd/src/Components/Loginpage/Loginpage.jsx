@@ -201,11 +201,11 @@ export default function Loginpage() {
     };
 
   const createUser = async (req) => {
-    console.log(req.su);
+    console.log("user data",req.Ju);
     const payload = {
-      email: req.Du.tv,
-      full_name: req.Du.tf,
-      profile_pic: req.Du.eN
+      email: req.Ju.tv,
+      full_name: req.Ju.tf,
+      profile_pic: req.Ju.eN
     }
     
     updateUser(payload)
