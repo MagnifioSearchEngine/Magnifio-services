@@ -1,20 +1,34 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
+import axios from 'axios';
 
 export default function TopicSearchChart() {
+   
+  const [TopicSearchChart,setTopicSearchChart] = useState()
+ 
+  useEffect(async() => {
+
+     const response = await axios.post("http://54.174.147.70:8080/api/v1/file/search",{
+       topic: 'Search'
+     })
+     console.log("bk",response)
+     let dataArray = [['file','percent']];
+
+     if (response.status === 200){
+
+      for (var n = 0; n < response.data.data.length; n++) {
+
+        // dataArray.push([response.data.data[n].file, response.data.data[n].percent]);
+       
+    }
+    setTopicSearchChart(dataArray)
+ }  
+  },[])
+  
   google.charts.load('current', { packages: ['corechart'] });
   google.charts.setOnLoadCallback(drawChart);
-  function drawChart() {
-    var data = google.visualization.arrayToDataTable([
-      ['Task', 'Hours per Day'],
-      ['Work', 6],
-      ['Eat', 6],
-      ['Commute', 3],
-      ['Watch TV', 6],
-      ['tv more',10],
-      ['mobile',9],
-      ['Mobile lenovo',29]
 
-    ]);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable(TopicSearchChart);
 
     var options = {
      legend:{alignment:'center',position:'bottom'},

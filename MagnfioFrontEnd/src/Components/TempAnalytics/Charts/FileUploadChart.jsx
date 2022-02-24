@@ -1,17 +1,32 @@
-import React from 'react'
+import React, {useState,useEffect} from 'react';
+import axios from 'axios';
 
 export default function FileUploadChart(){
+
+  const [fileUploadchart,setfileuploadchart] = useState()
+ 
+  useEffect(async() => {
+
+     const response = await axios.get("http://54.174.147.70:8080/api/v1/file/type")
+
+     let dataArray = [['file','percent']];
+
+     if (response.status === 200){
+
+      for (var n = 0; n < response.data.data.length; n++) {
+
+        dataArray.push([response.data.data[n].file, parseInt(response.data.data[n].percent)]);
+       
+    }
+    setfileuploadchart(dataArray)
+ }  
+  },[])
   
   google.charts.load("current", {packages:["corechart"]});
   google.charts.setOnLoadCallback(drawChart);
   function drawChart() {
-  var data = google.visualization.arrayToDataTable([
-      ['Language', 'Speakers (in millions)'],
-      ['German',  5.85],
-      ['French',  1.66],
-      ['india', 1]
-  
-    ]);
+
+  var data = google.visualization.arrayToDataTable(fileUploadchart);
 
   var options = {
     legend: 'none',

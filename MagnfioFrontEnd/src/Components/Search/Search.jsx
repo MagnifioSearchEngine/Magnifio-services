@@ -7,8 +7,8 @@ import axios from 'axios';
 
 export default function Search() {
   const [click, setClick] = useState(false)
-  const [searchResult, setsearchResult] = useState()
   const [searchQuery, setSearchQuery] = useState('')
+  const [searchResult, setSearchResult] = useState('')
 
   const handlePostQuery = async () => {
     await axios.post('http://52.90.163.49:443/answer', {
@@ -16,8 +16,7 @@ export default function Search() {
       company: 'magnifio'
     })
       .then(res => {
-        console.log(res)
-        setsearchResult(res.data.body)
+        setSearchResult(res.data.body)
       })
       .catch(err => console.log(err))
   }
@@ -38,7 +37,6 @@ export default function Search() {
       handlePostQuery()
       setSearchQuery('')
       setClick(false)
-
     }
   }
 
