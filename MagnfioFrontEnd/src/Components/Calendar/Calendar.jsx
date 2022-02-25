@@ -20,13 +20,13 @@ import {
  import { v4 as uuidv4 } from 'uuid';
 import { ToastContainer} from 'react-toastify';
 import eventContext from '../../context/events/eventContext';
+ import "./Calendar.css";
 
 //  import { extend } from '@syncfusion/ej2-base';
 //  import { SampleBase } from './sampleBase';
 //  import * as dataSource from './dataSource.json';
 //  import eventContext from '../../context/events/eventContext';
 //  import axios from 'axios';
-//  import "./Calendar.css";
 //  import { values } from 'lodash';
 export default function Welcome() {
 

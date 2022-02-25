@@ -8,7 +8,7 @@ import axios from 'axios';
 export default function Search() {
   const [click, setClick] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
-  const [searchResult, setSearchResult] = useState('')
+  const [searchResult, setSearchResult] = useState()
 
   const handlePostQuery = async () => {
     await axios.post('http://52.90.163.49:443/answer', {
@@ -16,9 +16,10 @@ export default function Search() {
       company: 'magnifio'
     })
       .then(res => {
+        console.log(res)
         setSearchResult(res.data.body)
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log("error: ", err.message))
   }
 
 

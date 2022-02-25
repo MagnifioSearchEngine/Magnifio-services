@@ -7,17 +7,14 @@ export default function TopicSearchChart() {
  
   useEffect(async() => {
 
-     const response = await axios.post("http://54.174.147.70:8080/api/v1/file/search",{
-       topic: 'Search'
-     })
-     console.log("bk",response)
+     const response = await axios.get("http://54.174.147.70:8080/api/v1/file/type")
      let dataArray = [['file','percent']];
 
      if (response.status === 200){
 
       for (var n = 0; n < response.data.data.length; n++) {
 
-        // dataArray.push([response.data.data[n].file, response.data.data[n].percent]);
+        dataArray.push([response.data.data[n].file, response.data.data[n].percent]);
        
     }
     setTopicSearchChart(dataArray)

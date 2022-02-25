@@ -3,7 +3,9 @@
     position: relative;
     top: -25px;
     display: flex;
-    background: #5f636d;
+    /* background: #5f636d; */
+  background-color: #323F48;
+
     border-radius: 10px;
     /* box-shadow: 0 0 10px 4px #eaebed; */
     transform: scale(0.85);
@@ -43,7 +45,9 @@
     margin-top: 7%;
     padding: 10px 15px 10px 10px;
     width: 97%;
-    background: #676b77;
+    /* background: #676b77; */
+  background-color: #323F48;
+
 }
 
 .allchat-board {
@@ -52,7 +56,9 @@
     /*box-shadow: 0 0 8px 2px #eaebed;*/
     border-radius: 10px;
     width: 100%;
-    background: #5f636d;
+    /* background: #5f636d; */
+  background-color: #323F48;
+
     height: 40rem;
     max-height: 45rem;
 }
