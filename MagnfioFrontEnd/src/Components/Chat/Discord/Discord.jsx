@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import io from 'socket.io-client';
 import axios from 'axios';
 import './discordDark.css';
@@ -8,7 +8,11 @@ const Discord = () => {
   const [discordMessages, setDiscordMessages] = useState([]);
   const [prevMessages, setPrevMessages] = useState([]);
 
-  const socket = io("https://magnifio-sockets.herokuapp.com/");
+  const socketRef = useRef(null);
+  if (socketRef.current === null) {
+    socketRef.current = io("https://magnifio-sockets.herokuapp.com/");
+  }
+  const socket = socketRef.current;
 
   const fetchPreviousMessages = async () => {
     await axios.post(`http://54.174.147.70:8080/api/v1/discordMessages`, {
@@ -51,6 +55,12 @@ const Discord = () => {
       fetchPreviousMessages();
 
     });
+  }, [socket]);
+
+  useEffect(() => {
+    return () => {
+      socket.disconnect();
+    };
   }, [socket]);
 
     return (

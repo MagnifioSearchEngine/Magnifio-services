@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import CallIcon from "@mui/icons-material/Call";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -23,7 +23,11 @@ export default function App() {
 	const [type, setType] = useState(false);
 	const [selectedCatergoy, setSelectedCategory] = useState("");
 
-	let socket = io("https://magnifio-sockets.herokuapp.com/");
+	const socketRef = useRef(null);
+	if (socketRef.current === null) {
+		socketRef.current = io("https://magnifio-sockets.herokuapp.com/");
+	}
+	const socket = socketRef.current;
 
 	const inputChanged = (e) => {
 		setMessage(e.target.value);
@@ -38,10 +42,12 @@ export default function App() {
 		setTimer(newTimer);
 	};
 
-	socket.on("typing", (data) => {
-		setType(data.type);
-		setTypingUserName(data.username);
-	});
+	useEffect(() => {
+		socket.on("typing", (data) => {
+			setType(data.type);
+			setTypingUserName(data.username);
+		});
+	}, [socket]);
 
 	const sendMessage = () => {
 		const messageData = {
@@ -97,6 +103,12 @@ export default function App() {
 		socket.on("message", (data) => {
 			console.log(data);
 		});
+	}, [socket]);
+
+	useEffect(() => {
+		return () => {
+			socket.disconnect();
+		};
 	}, [socket]);
 
 	console.log(selectedCatergoy);
