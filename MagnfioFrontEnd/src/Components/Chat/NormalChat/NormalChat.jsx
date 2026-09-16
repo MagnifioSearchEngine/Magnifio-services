@@ -1,10 +1,14 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import io from 'socket.io-client';
 import userContext from '../../../context/user/userContext';
 
 export default function NormalChat() {
     
-    const socket = io(`http://54.174.147.70:8080`);
+    const socketRef = useRef(null);
+    if (socketRef.current === null) {
+        socketRef.current = io(`http://54.174.147.70:8080`);
+    }
+    const socket = socketRef.current;
     const { user } = useContext(userContext);
 
 
@@ -51,6 +55,12 @@ export default function NormalChat() {
         socket.on('group-message', (group_message) => {
             console.log(group_message)
         })
+    }, [socket])
+
+    useEffect(() => {
+        return () => {
+            socket.disconnect();
+        };
     }, [socket])
 
 
