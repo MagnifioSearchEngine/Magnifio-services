@@ -23,6 +23,13 @@ export default function Email() {
     setModal2Visible(true);
   };
 
+  const formatEmailDate = (dateValue) => {
+    if (!dateValue) return '';
+    const parsedDate = new Date(dateValue);
+    if (isNaN(parsedDate.getTime())) return dateValue;
+    return parsedDate.toLocaleDateString();
+  };
+
   return (
     <div className="email-body">
       {emails.map((email, index) => {
@@ -52,7 +59,7 @@ export default function Email() {
               </div>
             </div>
             <div className="email-date">
-              <p>07/1/2022</p>
+              <p>{formatEmailDate(email.date)}</p>
             </div>
           </div>
         );
