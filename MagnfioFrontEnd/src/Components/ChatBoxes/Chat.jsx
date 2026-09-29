@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useCallback, useContext, useEffect, useRef } from "react";
 import discord from "../../images/discord.svg";
 import slack from "../../images/slack.svg";
 import emailContext from "../../context/emails/emailContext";
@@ -13,7 +13,7 @@ export default function Chat() {
 		console.log(frameContainerRef);
 	};
 
-	const showEmails = () => {
+	const showEmails = useCallback(() => {
 		emails.forEach((email) => {
 			let iframe = document.createElement("iframe");
 
@@ -23,11 +23,11 @@ export default function Chat() {
 			iframe.setAttribute("style", "height: 80vh; width: 70%; margin: 3%");
 			iframe.contentWindow.document.write(email), iframe;
 		});
-	};
+	}, [emails]);
 
 	useEffect(() => {
 		showEmails();
-	}, []);
+	}, [emails, showEmails]);
 
 	return (
 		<div className="chatbox-container">
