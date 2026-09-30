@@ -200,39 +200,24 @@ export default function Loginpage() {
       return '';
     };
 
-  const createUser = async (req) => {
-    console.log("user data",req);
-    if(req.Du){
+  const createUser = async (googleUser) => {
+    console.log("user data",googleUser);
+    if(googleUser && typeof googleUser.getBasicProfile === 'function'){
+      const profile = googleUser.getBasicProfile()
       const payload = {
-        email: req.Du.tv,
-        full_name: req.Du.tf,
-        profile_pic: req.Du.eN
+        email: profile.getEmail(),
+        full_name: profile.getName(),
+        profile_pic: profile.getImageUrl()
       }
       updateUser(payload)
-      
-    await axios.post('http://54.174.147.70:8080/api/v1/user/create', payload)
-    .then(res => {
-      console.log(res)
-    })
-    .catch(err => {
-      console.log(err)
-    })
-    }else if(req.Ju){
-      const payload = {
-        email: req.Ju.zv,
-        full_name: req.Ju.tf,
-        profile_pic: req.Ju.zN
-      }
-      updateUser(payload)
-      
-    await axios.post('http://54.174.147.70:8080/api/v1/user/create', payload)
-    .then(res => {
-      console.log(res)
-    })
-    .catch(err => {
-      console.log(err)
-    })
 
+    await axios.post('http://54.174.147.70:8080/api/v1/user/create', payload)
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
     }
   }
 
@@ -292,8 +277,9 @@ export default function Loginpage() {
       // update(emailList); // update context
       updateEmails(contextEmail); // update context
       createUser(res); // create user for chat
-      if(res && res.wc.access_token)  {
-        redirectPage(res.wc.access_token)
+      const authResponse = res && typeof res.getAuthResponse === 'function' ? res.getAuthResponse() : null;
+      if(authResponse && authResponse.access_token)  {
+        redirectPage(authResponse.access_token)
       }
         
       })
