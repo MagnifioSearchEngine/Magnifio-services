@@ -4,6 +4,8 @@ import './search.css';
 import './searchDark.css';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Search() {
   const [click, setClick] = useState(false)
@@ -19,7 +21,11 @@ export default function Search() {
         console.log(res)
         setSearchResult(res.data.body)
       })
-      .catch(err => console.log("error: ", err.message))
+      .catch(err => {
+        console.log("error: ", err.message)
+        setSearchResult()
+        toast.error(err.response?.data?.message || err.message)
+      })
   }
 
 
@@ -43,6 +49,11 @@ export default function Search() {
 
   return (
     <div className="search-container" >
+      <ToastContainer
+        position="top-center"
+        autoClose="5000"
+        theme="dark"
+      />
       <h1 className="search-bar-company-logo">Magnif.io</h1>
       <div className="Search-bar">
         <SearchIcon className="search-icon"/>
