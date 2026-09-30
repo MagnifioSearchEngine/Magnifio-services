@@ -80,39 +80,6 @@ export default function Files() {
     //     setOpen(false)
     // }
 
-	const props = {
-		customRequest({ file, onSuccess }) {
-			console.log(file, onSuccess);
-			setTimeout(() => {
-				onSuccess("ok");
-			}, 1000);
-		},
-
-		onChange(info) {
-			const { status } = info.file;
-			if (status !== "uploading") {
-				console.log(info.file, info.fileList);
-				setUploadedFile(info.file);
-			}
-			if (status === "done") {
-				message.success(`Loading ${info.file.name} ...`);
-			} else if (status === "error") {
-				message.error(`Loading failed!`);
-			}
-		},
-
-		onDrop(e) {
-			console.log("Loading dropped file ...", e.dataTransfer.files);
-			setFile([...file, e.dataTransfer.files[0]])
-            setCurrentFile(
-                {   
-                    filename: e.dataTransfer.files[0].name, 
-                    type: e.dataTransfer.files[0].type
-                }
-            )
-		},
-	};
-
   return (
         <div className="modal-container">
             <button 
