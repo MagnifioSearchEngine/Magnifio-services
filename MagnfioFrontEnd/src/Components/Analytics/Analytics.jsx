@@ -40,11 +40,31 @@ export default function Dashboard() {
         <CCard>
           <CCardHeader component="h5" >User's analitics</CCardHeader>
           <CCardBody>
-          <User/>
-          <User/>
-          <User/>
-          <User/>
-          <User/>
+          <User
+            avatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+            name="baluram"
+            activity="10 times"
+          />
+          <User
+            avatar="https://joeschmoe.io/api/v1/jane"
+            name="jane doe"
+            activity="5 times"
+          />
+          <User
+            avatar="https://joeschmoe.io/api/v1/john"
+            name="john smith"
+            activity="20 times"
+          />
+          <User
+            avatar="https://joeschmoe.io/api/v1/alex"
+            name="alex kumar"
+            activity="8 times"
+          />
+          <User
+            avatar="https://joeschmoe.io/api/v1/priya"
+            name="priya sharma"
+            activity="15 times"
+          />
 
             <CButton href="#">see more</CButton>
           </CCardBody>

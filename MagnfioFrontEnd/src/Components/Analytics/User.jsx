@@ -9,16 +9,14 @@ import 'antd/dist/antd.css';
 
 const { Meta } = Card;
 
-export default function User() {
+export default function User({ avatar, name, activity }) {
   return (
     <>
       <Card style={{ width: 300, marginTop: 16 }}>
         <Meta
-          avatar={
-            <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-          }
-          title="baluram"
-          description="10 times"
+          avatar={<Avatar src={avatar} />}
+          title={name}
+          description={activity}
         />
       </Card>
     </>
