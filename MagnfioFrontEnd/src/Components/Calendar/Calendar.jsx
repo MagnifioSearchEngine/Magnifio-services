@@ -107,6 +107,12 @@ export default function Welcome() {
       deleteEvent(args.data[0].Id.split('-').join(''));
     }
     else if(args.requestType === "eventChanged") {
+      var attendees = args.changedRecords[0]?.OwnerId?.map((attendee) => {
+        return ({
+          email: attendee
+        })
+      })
+
       updateEvent(args.data[0].Id.split('-').join(''), {
           summary: args.changedRecords[0].Subject,
           location: args.changedRecords[0].Location,
@@ -116,7 +122,7 @@ export default function Welcome() {
           end: {
             dateTime: args.changedRecords[0].EndTime.toISOString(),
           },
-          attendees: args.changedRecords[0].OwnerId,
+          attendees: attendees,
         });
     }
   }
