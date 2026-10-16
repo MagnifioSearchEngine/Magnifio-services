@@ -37,7 +37,7 @@ const config = {
 
 export default function Files() {
 	const [open, setOpen] = useState(false);
-    const [file, setFile] = useState([]);
+    const [selectedFile, setSelectedFile] = useState(null);
     const [currentFile, setCurrentFile] = useState();
     
 	const handleOpen = () => setOpen(true);
@@ -45,7 +45,7 @@ export default function Files() {
 	const handleClose = () => setOpen(false);
 
     const handleFileInput = (e) => {
-        setFile([...file, e.target.files[0]])
+        setSelectedFile(e.target.files[0])
         setCurrentFile({ filename: e.target.files[0].name, type: e.target.files[0].type })
     }
 
@@ -55,9 +55,9 @@ export default function Files() {
         const filename = 
         `${currentFile.filename.split(".")[0]}--${date}--${'magnifio'}--${uuidv4()}.${currentFile.type.split('/')[1]}`;
 
-        const updatedFile = new File(file, filename);
+        const updatedFile = new File([selectedFile], filename, { type: currentFile.type });
     
-        console.log(file)
+        console.log(selectedFile)
         S3FileUpload.uploadFile(updatedFile, config)
         .then((data) => console.log(data))
         .catch((err) => console.error(err));
@@ -103,7 +103,7 @@ export default function Files() {
 
 		onDrop(e) {
 			console.log("Loading dropped file ...", e.dataTransfer.files);
-			setFile([...file, e.dataTransfer.files[0]])
+			setSelectedFile(e.dataTransfer.files[0])
             setCurrentFile(
                 {   
                     filename: e.dataTransfer.files[0].name, 
