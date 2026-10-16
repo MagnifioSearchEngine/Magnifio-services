@@ -18,11 +18,11 @@ const config = {
 
 const FileUpload = () => {
 
-    const [file, setFile] = useState([]);
+    const [selectedFile, setSelectedFile] = useState(null);
     const [currentFile, setCurrentFile] = useState(null);
 
     const handleFileInput = (e) => {
-        setFile([...file,e.target.files[0]])
+        setSelectedFile(e.target.files[0])
         setCurrentFile({ filename: e.target.files[0].name, type: e.target.files[0].type})
     }
 
@@ -31,7 +31,7 @@ const FileUpload = () => {
         let name = currentFile.filename.split('.')
         const filename = `${name[0]}--${date}--${"magnifio"}--${uuidv4()}.${name[1]}`;
     
-        const updatedfile = new File(file,filename);
+        const updatedfile = new File([selectedFile], filename, { type: currentFile.type });
     
         S3FileUpload.uploadFile(updatedfile, config)
           .then((data) => console.log(data))
