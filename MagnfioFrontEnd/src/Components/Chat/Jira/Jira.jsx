@@ -45,20 +45,19 @@ const ExpandableComponentWrapper = (props) => {
     const { uniqueKey, summary, description, issueId, storyPoint = 1 } = props;
     const [comments, setComments] = useState([]);
     const [expanded, setExpanded] = useState(false);
+    const [fetched, setFetched] = useState(false);
 
     const fetchComments = async () => {
         const response = await axios.get(`http://54.174.147.70:8080/api/v1/jira/${issueId}`);
-        console.log(response.data);
-        setComments(response.data.data?.comment);
-        console.log(comments);
+        setComments(Array.isArray(response.data.data?.comment) ? response.data.data.comment : []);
     }
-
-    useEffect(() => {
-        fetchComments();
-    }, []);
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
+        if (isExpanded && !fetched) {
+            setFetched(true);
+            fetchComments();
+        }
     };
 
     return (
