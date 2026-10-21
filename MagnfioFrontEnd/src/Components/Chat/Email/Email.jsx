@@ -26,7 +26,12 @@ export default function Email() {
   return (
     <div className="email-body">
       {emails.map((email, index) => {
-        let trimmedEmail = email.from.split('<')
+        let trimmedEmail = email.from.split('<');
+        const parsedDate = email.date ? new Date(email.date) : null;
+        const formattedDate =
+          parsedDate && !isNaN(parsedDate.getTime())
+            ? parsedDate.toLocaleDateString()
+            : '';
         return (
           <div
             key={email.id}
@@ -52,7 +57,7 @@ export default function Email() {
               </div>
             </div>
             <div className="email-date">
-              <p>07/1/2022</p>
+              <p>{formattedDate}</p>
             </div>
           </div>
         );
