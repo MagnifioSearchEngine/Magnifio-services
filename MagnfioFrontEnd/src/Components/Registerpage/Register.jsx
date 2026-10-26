@@ -43,8 +43,12 @@ export default function Register() {
             return data;
           })
           .catch((err) => {
-            toast.error(err.response.data.message)
+            toast.error(err.response?.data?.message || err.message)
           })
+
+          if (!registerRequest?.data) {
+            return;
+          }
 
           const { message } = registerRequest.data;
 
@@ -55,7 +59,7 @@ export default function Register() {
             }, 3000)
           }
       } catch (error) {
-          toast.error(error)
+          toast.error(error?.response?.data?.message || error?.message || 'Registration failed')
       }
   };
 
