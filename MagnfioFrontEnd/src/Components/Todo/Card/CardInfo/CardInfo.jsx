@@ -39,18 +39,20 @@ function CardInfo(props) {
   };
 
   const addLabel = (label) => {
-    const index = values.labels.findIndex((item) => item.text === label.text);
+    const labels = values.labels || [];
+    const index = labels.findIndex((item) => item.text === label.text);
     if (index > -1) return;
 
     setSelectedColor("");
     setValues({
       ...values,
-      labels: [...values.labels, label],
+      labels: [...labels, label],
     });
   };
 
   const removeLabel = (label) => {
-    const tempLabels = values.labels.filter((item) => item.text !== label.text);
+    const labels = values.labels || [];
+    const tempLabels = labels.filter((item) => item.text !== label.text);
 
     setValues({
       ...values,
@@ -66,12 +68,12 @@ function CardInfo(props) {
     };
     setValues({
       ...values,
-      tasks: [...values.tasks, task],
+      tasks: [...(values.tasks || []), task],
     });
   };
 
   const removeTask = (id) => {
-    const tasks = [...values.tasks];
+    const tasks = [...(values.tasks || [])];
 
     const tempTasks = tasks.filter((item) => item.id !== id);
     setValues({
@@ -81,7 +83,7 @@ function CardInfo(props) {
   };
 
   const updateTask = (id, value) => {
-    const tasks = [...values.tasks];
+    const tasks = [...(values.tasks || [])];
 
     const index = tasks.findIndex((item) => item.id === id);
     if (index < 0) return;
