@@ -10,14 +10,12 @@ export default function TempDashboard() {
 
     const getCalendarEvents = async () => {
         const { data } = await axios.get(`http://3.87.73.247:8080/events`)
-        setEvents(data);
-        console.log('before', events);
-        events.sort((a, b) => {
+        data.sort((a, b) => {
             const first = Date.parse(a.startTime);
             const second = Date.parse(b.startTime);
             return first - second;
         });
-        console.log('sorted', events);
+        setEvents(data);
     }
 
     useEffect(() => {
